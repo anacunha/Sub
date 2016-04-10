@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c619e3d8-f5f5-4011-9bc5-063a326ff266}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{7356f011-0b72-4d26-9b00-86d54ce797bc}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{de89815c-76a2-46a6-9cf2-50d51828a113}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="SVL Header Files">
+      <UniqueIdentifier>{3f3e4296-dca9-4d8c-ac5f-d01070aa05b9}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="SVL Source Files">
+      <UniqueIdentifier>{0c178dbf-7f54-41df-a070-c76c3b900890}</UniqueIdentifier>
+      <Extensions>cc</Extensions>
+    </Filter>
+    <Filter Include="Cell Header Files">
+      <UniqueIdentifier>{f481a14c-0366-410a-92ce-ba0981438ddc}</UniqueIdentifier>
+      <Extensions>hh</Extensions>
+    </Filter>
+    <Filter Include="Cell Source Files">
+      <UniqueIdentifier>{114c3563-89eb-43a5-8ada-36ee261675fb}</UniqueIdentifier>
+      <Extensions>cc</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="average.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glrender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pole.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="qt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="subdiv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SubDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="subsurf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SubView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="view.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Basics.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Mat.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Mat2.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Mat3.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Mat4.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Vec.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Vec2.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Vec3.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="svl\Vec4.cpp">
+      <Filter>SVL Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cell\array.cpp">
+      <Filter>Cell Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cell\cell.cpp">
+      <Filter>Cell Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cell\edge.cpp">
+      <Filter>Cell Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cell\face.cpp">
+      <Filter>Cell Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cell\list.cpp">
+      <Filter>Cell Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cell\obj.cpp">
+      <Filter>Cell Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cell\vertex.cpp">
+      <Filter>Cell Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Sub.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="average.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glrender.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pole.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="qt.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="subdiv.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="subsurf.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="view.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Basics.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\CLConfig.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Mat.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Mat2.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Mat3.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Mat4.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\SVL.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\SVLgl.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Transform.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Vec.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Vec2.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Vec3.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\Vec4.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\VL.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\VLConfig.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\VLConstants.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svl\VLMath.h">
+      <Filter>SVL Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell\array.hh">
+      <Filter>Cell Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell\cell.hh">
+      <Filter>Cell Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell\edge.hh">
+      <Filter>Cell Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell\face.hh">
+      <Filter>Cell Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell\list.hh">
+      <Filter>Cell Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell\obj.hh">
+      <Filter>Cell Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell\vertex.hh">
+      <Filter>Cell Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Sub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\SubDoc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\Sub.rc2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
