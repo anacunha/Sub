@@ -37,4 +37,17 @@ public:
 	static void average( Vertex *v );
 };
 
+class AvgEval : public Average
+{
+	bool interpolating; // loop's OR butterfly
+public:
+	AvgEval(bool i = false)
+		: interpolating(i)
+	{
+	}
+
+	void operator()(Cell *cell);
+	static void average(Vertex *v);
+};
+
 #endif

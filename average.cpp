@@ -86,5 +86,49 @@ void AvgAdHoc::average( Vertex *v )
 		e = e->Onext();
 	} while( e != start );
 
-	v->nor /= double(cnt);	
+	// v->nor /= double(cnt);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void AvgEval::average(Vertex *v)
+// Generate a vertex position for v by averaging the positions of its neighbors.
+// Put result in normal field.  (Copy into pos later.)
+{
+	Edge *start = v->getEdge();
+	Edge *e = start;
+	v->nor = Vec3(0, 0, 0);
+	int cnt = 0;
+	do
+	{
+		++cnt;
+		v->nor += e->Dest()->pos;
+		e = e->Onext();
+	} while (e != start);
+
+	v->nor /= double(cnt);
+}
+
+void AvgEval::operator()(Cell *cell)
+{
+	// 1. Generate new positions.  (Put new pos into normal for the time being.)
+	{
+		CellVertexIterator verts(cell);
+		Vertex *v;
+		while ((v = verts.next()) != 0)
+			if (!interpolating || v->tag == VODD)
+				average(v);
+	}
+	// 2. Copy positions out of nor into pos.
+	{
+		CellVertexIterator verts(cell);
+		Vertex *v;
+		while ((v = verts.next()) != 0)
+			if (!interpolating || v->tag == VODD)
+				v->pos = v->nor;
+	}
+	// 3. Generate new normals.
+	AvgNOOP::genNormals(cell); //??????
+}
+
+

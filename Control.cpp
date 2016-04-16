@@ -104,11 +104,17 @@ void CControl::OnSelchangeSubstyle()
 		view->GetDocument()->SetAverage( new AvgAdHoc( true ) );
 		break;
 	case 3:
+	{
 		OutputDebugString("Loop\n");
+		view->GetDocument()->SetAverage( new AvgEval( false ));
 		break;
+	}
 	case 4:
+	{
 		OutputDebugString("Butterfly\n");
+		view->GetDocument()->SetAverage( new AvgEval( true ));
 		break;
+	}
 	}
 }
 
