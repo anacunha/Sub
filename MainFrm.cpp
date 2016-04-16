@@ -46,8 +46,8 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	
 	cs.x = 375;
 	cs.y = 80;
-	cs.cx = 400;
-	cs.cy = 400;
+	cs.cx = 800;
+	cs.cy = 800;
 	return TRUE;
 }
 
