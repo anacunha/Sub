@@ -94,27 +94,23 @@ void CControl::OnSelchangeSubstyle()
 
 	switch( style )
 	{
-	case 0:
-		view->GetDocument()->SetAverage( new AvgNOOP() );
-		break;
-	case 1:
-		view->GetDocument()->SetAverage( new AvgAdHoc( false ) );
-		break;
-	case 2:
-		view->GetDocument()->SetAverage( new AvgAdHoc( true ) );
-		break;
-	case 3:
-	{
-		OutputDebugString("Loop\n");
-		view->GetDocument()->SetAverage( new AvgEval( false ));
-		break;
-	}
-	case 4:
-	{
-		OutputDebugString("Butterfly\n");
-		view->GetDocument()->SetAverage( new AvgEval( true ));
-		break;
-	}
+		case 0:
+			view->GetDocument()->SetAverage( new AvgNOOP() );
+			break;
+		case 1:
+			view->GetDocument()->SetAverage( new AvgAdHoc( false ) );
+			break;
+		case 2:
+			view->GetDocument()->SetAverage( new AvgAdHoc( true ) );
+			break;
+		case 3:
+			OutputDebugString("Loop\n");
+			view->GetDocument()->SetAverage( new AvgEval( false ) );
+			break;
+		case 4:
+			OutputDebugString("Butterfly\n");
+			view->GetDocument()->SetAverage( new AvgEval( true ) );
+			break;
 	}
 }
 

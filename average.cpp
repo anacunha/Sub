@@ -98,15 +98,27 @@ void AvgEval::average(Vertex *v)
 	Edge *start = v->getEdge();
 	Edge *e = start;
 	v->nor = Vec3(0, 0, 0);
-	int cnt = 0;
+	int n = 0;
+
+	// Iterating through all the vertices
 	do
 	{
-		++cnt;
+		++n; // number of neighbors
 		v->nor += e->Dest()->pos;
 		e = e->Onext();
 	} while (e != start);
 
-	v->nor /= double(cnt);
+	// Apply Loop Averaging Mask
+
+	// Calculate beta
+	double beta = (5.0 / 4.0) - (sqr(3 + 2 * cos((2 * 3.1415) / n))/32);
+
+	// Calculate alpha
+	double alpha = (n * (1 - beta)) / beta;
+
+	v->nor += v->pos * alpha;
+	// Update Vertex based on stupid formula
+	v->nor /= double(n + alpha);
 }
 
 void AvgEval::operator()(Cell *cell)
