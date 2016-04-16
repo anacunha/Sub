@@ -86,7 +86,7 @@ void AvgAdHoc::average( Vertex *v )
 		e = e->Onext();
 	} while( e != start );
 
-	// v->nor /= double(cnt);
+	v->nor /= double(cnt);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
