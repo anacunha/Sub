@@ -41,9 +41,10 @@ public:
 	Cell *editCell, *saveCell;
 	Average *average;
 
-	void Resubdivide();
+	void Resubdivide(bool limit = false);
 	void SetLevel( int level );
 	void SetAverage( Average *a );
+	void PushToLimit();
 public:
 	virtual ~CSubDoc();
 #ifdef _DEBUG

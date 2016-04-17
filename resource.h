@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by Sub.rc
 //
 #define IDD_ABOUTBOX                    100
@@ -11,6 +11,7 @@
 #define IDC_MOVELORES                   1003
 #define IDC_EDITLORES                   1004
 #define IDC_WIREFRAME                   1005
+#define IDC_LIMIT                       1006
 #define ID_FILE_SAVE_IMAGE              32771
 
 // Next default values for new objects
@@ -20,7 +21,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32772
-#define _APS_NEXT_CONTROL_VALUE         1006
+#define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

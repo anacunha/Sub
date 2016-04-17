@@ -37,6 +37,7 @@ void CControl::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CControl)
 	DDX_Control(pDX, IDC_SUBSTYLE, m_Substyle);
 	DDX_Control(pDX, IDC_LEVELSLIDER, m_LevelSlider);
+	DDX_Control(pDX, IDC_LIMIT, m_Limit);
 	DDX_Check(pDX, IDC_EDITLORES, m_EditLoRes);
 	DDX_Check(pDX, IDC_MOVELORES, m_MoveLoRes);
 	DDX_Check(pDX, IDC_WIREFRAME, m_Wireframe);
@@ -50,7 +51,8 @@ BEGIN_MESSAGE_MAP(CControl, CDialog)
 	//{{AFX_MSG_MAP(CControl)
 	ON_WM_HSCROLL()
 	ON_CBN_SELCHANGE(IDC_SUBSTYLE, OnSelchangeSubstyle)
-	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_LIMIT, OnBnClickedLimit)
+	//}}AFX_MSG_MAP	
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -95,20 +97,25 @@ void CControl::OnSelchangeSubstyle()
 	switch( style )
 	{
 		case 0:
+			m_Limit.EnableWindow(false);
 			view->GetDocument()->SetAverage( new AvgNOOP() );
 			break;
 		case 1:
+			m_Limit.EnableWindow(false);
 			view->GetDocument()->SetAverage( new AvgAdHoc( false ) );
 			break;
 		case 2:
+			m_Limit.EnableWindow(false);
 			view->GetDocument()->SetAverage( new AvgAdHoc( true ) );
 			break;
 		case 3:
 			OutputDebugString("Loop\n");
+			m_Limit.EnableWindow(true);
 			view->GetDocument()->SetAverage( new AvgEval( false ) );
 			break;
 		case 4:
 			OutputDebugString("Butterfly\n");
+			m_Limit.EnableWindow(false);
 			view->GetDocument()->SetAverage( new AvgEval( true ) );
 			break;
 	}
@@ -116,4 +123,11 @@ void CControl::OnSelchangeSubstyle()
 
 void CControl::OnOK()
 {
+}
+
+void CControl::OnBnClickedLimit()
+{
+	if (m_Limit.GetCheck()) {
+		view->GetDocument()->PushToLimit();
+	}
 }

@@ -153,6 +153,7 @@ BEGIN
     CONTROL         "Move Low Resolution",IDC_MOVELORES,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,15,95,128,10
     CONTROL         "Edit Low Resolution",IDC_EDITLORES,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,15,110,79,10
     CONTROL         "Wireframe",IDC_WIREFRAME,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,15,125,85,10
+    CONTROL         "Push to Limit",IDC_LIMIT,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,15,140,53,10
 END
 
 
@@ -255,6 +256,7 @@ BEGIN
     0, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 100,
+    0, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 0

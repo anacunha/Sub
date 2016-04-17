@@ -49,6 +49,8 @@ void AvgNOOP::genNormals( Cell *cell )
 		genNormal( v );
 }
 
+void AvgNOOP::applyEvaluation(Cell *cell) {}
+
 void AvgAdHoc::operator()( Cell *cell )
 {
 	// 1. Generate new positions.  (Put new pos into normal for the time being.)
@@ -89,6 +91,8 @@ void AvgAdHoc::average( Vertex *v )
 	v->nor /= double(cnt);
 }
 
+void AvgAdHoc::applyEvaluation(Cell *cell) {}
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void AvgEval::average(Vertex *v)
@@ -117,8 +121,58 @@ void AvgEval::average(Vertex *v)
 	double alpha = (n * (1 - beta)) / beta;
 
 	v->nor += v->pos * alpha;
-	// Update Vertex based on stupid formula
+	// Update Vertex based on averaging mask formula
 	v->nor /= double(n + alpha);
+}
+
+void AvgEval::evaluate(Vertex *v)
+// Push a vertex position to the limit using the evaluation mask.
+// Put result in tmp field.  (Copy into pos later.)
+{
+	Edge *start = v->getEdge();
+	Edge *e = start;
+	v->tmp = Vec3(0, 0, 0);
+	int n = 0;
+
+	// Iterating through all the vertices
+	do
+	{
+		++n; // number of neighbors
+		v->tmp += e->Dest()->pos;
+		e = e->Onext();
+	} while (e != start);
+
+	// Apply Loop Evaluation Mask
+
+	// Calculate beta
+	double beta = (5.0 / 4.0) - (sqr(3 + 2 * cos((2 * 3.1415) / n)) / 32);
+
+	// Calculate epsilon
+	double epsilon = (3 * n) / beta;
+
+	v->tmp += v->pos * epsilon;
+	// Update Vertex based on evaluation mask formula
+	v->tmp /= double(n + epsilon);
+}
+
+void AvgEval::applyEvaluation(Cell *cell)
+{
+	// 1. Generate new positions.  (Put new pos into tmp for the time being.)
+	{
+		CellVertexIterator verts(cell);
+		Vertex *v;
+		while ((v = verts.next()) != 0)
+			if (!interpolating || v->tag == VODD)
+				evaluate(v);
+	}
+	// 2. Copy positions out of tmp into pos.
+	{
+		CellVertexIterator verts(cell);
+		Vertex *v;
+		while ((v = verts.next()) != 0)
+			if (!interpolating || v->tag == VODD)
+				v->pos = v->tmp;
+	}
 }
 
 void AvgEval::operator()(Cell *cell)

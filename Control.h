@@ -24,6 +24,7 @@ public:
 	enum { IDD = IDD_CONTROL };
 	CComboBox	m_Substyle;
 	CSliderCtrl	m_LevelSlider;
+	CButton m_Limit;
 	BOOL	m_EditLoRes;
 	BOOL	m_MoveLoRes;
 	BOOL	m_Wireframe;
@@ -47,6 +48,7 @@ protected:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeSubstyle();
+	afx_msg void OnBnClickedLimit();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

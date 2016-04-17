@@ -100,7 +100,7 @@ BOOL CSubDoc::OnNewDocument()
 	return TRUE;
 }
 
-void CSubDoc::Resubdivide()
+void CSubDoc::Resubdivide(bool limit)
 {
 	if( editCell )
 		Cell::kill( editCell );
@@ -111,6 +111,13 @@ void CSubDoc::Resubdivide()
 		subdivideOnce( editCell );
 		(*average)( editCell ); // operator()
 	}
+
+	// Push to the limit with Evaluation Mask
+	if (limit) {
+		OutputDebugString("Push to limit\n");
+		average->applyEvaluation(editCell);
+	}
+
 	if( !level )
 	{
 		// just generate some reasonable normals for the base mesh
@@ -122,6 +129,12 @@ void CSubDoc::Resubdivide()
 void CSubDoc::SetLevel( int lvl )
 {
 	level = lvl;
+
+	// Debug
+	// char s[256];
+	// sprintf(s, "Level %d\n", lvl);
+	// OutputDebugStringA(s);
+
 	Resubdivide();
 }
 
@@ -130,6 +143,11 @@ void CSubDoc::SetAverage( Average *a )
 	delete average;
 	average = a;
 	Resubdivide();
+}
+
+void CSubDoc::PushToLimit()
+{
+	Resubdivide(true);
 }
 
 /////////////////////////////////////////////////////////////////////////////

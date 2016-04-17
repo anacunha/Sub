@@ -13,13 +13,14 @@ class Average
 {
 public:
 	virtual void operator()( Cell *cell ) = 0;	// Perform averaging step on Cell
+	virtual void applyEvaluation(Cell *cell) = 0;
 };
 
 class AvgNOOP : public Average
 {
 public:
 	void operator()( Cell * );
-
+	void applyEvaluation(Cell *cell);
 	static void genNormal( Vertex *v );
 	static void genNormals( Cell *c );
 };
@@ -34,6 +35,7 @@ public:
 	}
 
 	void operator()( Cell *cell );
+	void applyEvaluation(Cell *cell);
 	static void average( Vertex *v );
 };
 
@@ -47,7 +49,9 @@ public:
 	}
 
 	void operator()(Cell *cell);
+	void applyEvaluation(Cell *cell);
 	static void average(Vertex *v);
+	static void evaluate(Vertex *v);
 };
 
 #endif
