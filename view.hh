@@ -68,7 +68,7 @@ class View
 
    void glSetup();
    void glPushWorldSpace();
-   void glRender();
+   void glRender(int floor_tag);
 
    int glGetRay(double x, double y, Vec3 &origin, Vec3 &dir);
    int glGetMouseWorldPos(double x, double y, Vec3 &pos);
