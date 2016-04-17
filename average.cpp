@@ -125,6 +125,83 @@ void AvgEval::average(Vertex *v)
 	v->nor /= double(n + alpha);
 }
 
+void AvgEval::butterfly(Vertex *v)
+// Generate a vertex position for v by applying averaging masks for butterfly scheme
+//    which only takes into account the even vertices
+// Put result in normal field.  (Copy into pos later.)
+{
+	// ITERATION LEVEL: 1
+	Edge *start = v->getEdge();
+	Edge *e = start;
+	v->nor = Vec3(0, 0, 0);
+	int n = 0;
+	do {
+		++n; // number of neighbors
+		if (e->Dest()->tag == VEVEN)
+			v->nor += 0.5*(e->Dest()->pos);
+		e = e->Onext();
+	} while (e != start);
+
+	// ITERATION LEVEL: 2
+	Edge *start1 = v->getEdge();
+	Edge *e1 = start1;
+	do {
+		Edge *start2 = (e1->Dest())->getEdge();
+		Edge *e2 = start2;
+		do {
+			if (e2->Dest()->tag == VEVEN)
+				v->nor += 0.0625*(e2->Dest()->pos);
+			e2 = e2->Onext();
+		} while (e2 != start2);
+		e1 = e1->Onext();
+	} while (e1 != start1);
+
+	// ITERATION LEVEL: 3
+	Edge *start2 = v->getEdge();
+	Edge *e2 = start2;
+	do {
+		if (e2->Dest()->tag == VEVEN)
+		{
+			Edge *start3 = (e2->Dest())->getEdge();
+			Edge *e3 = start3;
+
+			do {
+				e3 = e3->Onext();
+			} while (e3->Dest() == v);
+
+			e3 = e3->Onext();
+			e3 = e3->Onext();
+
+			{
+				Edge *start4 = (e3->Dest())->getEdge();
+				Edge *e4 = start4;
+				do {
+					if (e4->Dest()->tag == VEVEN)
+						v->nor += -0.0625*(e3->Dest()->pos);
+					e4 = e4->Onext();
+				} while (e4 != start4);
+
+			}
+
+			e3 = e3->Onext();
+			e3 = e3->Onext();
+
+			{
+				Edge *start4 = (e3->Dest())->getEdge();
+				Edge *e4 = start4;
+				do {
+					if (e4->Dest()->tag == VEVEN)
+						v->nor += -0.0625*(e3->Dest()->pos);
+					e4 = e4->Onext();
+				} while (e4 != start4);
+
+			}
+		}
+		e2 = e2->Onext();
+	} while (e2 != start2);
+}
+
+
 void AvgEval::evaluate(Vertex *v)
 // Push a vertex position to the limit using the evaluation mask.
 // Put result in tmp field.  (Copy into pos later.)
@@ -162,7 +239,7 @@ void AvgEval::applyEvaluation(Cell *cell)
 		CellVertexIterator verts(cell);
 		Vertex *v;
 		while ((v = verts.next()) != 0)
-			if (!interpolating || v->tag == VODD)
+			if (!interpolating)
 				evaluate(v);
 	}
 	// 2. Copy positions out of tmp into pos.
@@ -170,7 +247,7 @@ void AvgEval::applyEvaluation(Cell *cell)
 		CellVertexIterator verts(cell);
 		Vertex *v;
 		while ((v = verts.next()) != 0)
-			if (!interpolating || v->tag == VODD)
+			if (!interpolating)
 				v->pos = v->tmp;
 	}
 }
@@ -182,8 +259,10 @@ void AvgEval::operator()(Cell *cell)
 		CellVertexIterator verts(cell);
 		Vertex *v;
 		while ((v = verts.next()) != 0)
-			if (!interpolating || v->tag == VODD)
+			if (!interpolating)
 				average(v);
+			else if (v->tag == VODD)
+				butterfly(v);
 	}
 	// 2. Copy positions out of nor into pos.
 	{

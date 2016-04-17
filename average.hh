@@ -51,6 +51,7 @@ public:
 	void operator()(Cell *cell);
 	void applyEvaluation(Cell *cell);
 	static void average(Vertex *v);
+	static void butterfly(Vertex *v);
 	static void evaluate(Vertex *v);
 };
 
