@@ -117,6 +117,9 @@ void CSubDoc::Resubdivide(bool limit)
 		OutputDebugString("Push to limit\n");
 		average->applyEvaluation(editCell);
 	}
+	else {
+		OutputDebugString("Don't push to limit\n");
+	}
 
 	if( !level )
 	{
@@ -126,7 +129,7 @@ void CSubDoc::Resubdivide(bool limit)
 	UpdateAllViews( 0 );
 }
 
-void CSubDoc::SetLevel( int lvl )
+void CSubDoc::SetLevel( int lvl, bool limit )
 {
 	level = lvl;
 
@@ -135,7 +138,7 @@ void CSubDoc::SetLevel( int lvl )
 	// sprintf(s, "Level %d\n", lvl);
 	// OutputDebugStringA(s);
 
-	Resubdivide();
+	Resubdivide(limit);
 }
 
 void CSubDoc::SetAverage( Average *a )
@@ -145,9 +148,9 @@ void CSubDoc::SetAverage( Average *a )
 	Resubdivide();
 }
 
-void CSubDoc::PushToLimit()
+void CSubDoc::PushToLimit(bool limit)
 {
-	Resubdivide(true);
+	Resubdivide(limit);
 }
 
 /////////////////////////////////////////////////////////////////////////////

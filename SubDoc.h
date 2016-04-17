@@ -42,9 +42,9 @@ public:
 	Average *average;
 
 	void Resubdivide(bool limit = false);
-	void SetLevel( int level );
+	void SetLevel( int level, bool limit );
 	void SetAverage( Average *a );
-	void PushToLimit();
+	void PushToLimit(bool limit);
 public:
 	virtual ~CSubDoc();
 #ifdef _DEBUG
