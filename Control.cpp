@@ -62,7 +62,7 @@ void CControl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	if( ((CSliderCtrl*)pScrollBar) == &m_LevelSlider && nSBCode != SB_ENDSCROLL )
 	{
-		view->GetDocument()->SetLevel( ((CSliderCtrl*)pScrollBar)->GetPos() );
+		view->GetDocument()->SetLevel( ((CSliderCtrl*)pScrollBar)->GetPos(), m_Limit.GetCheck() );
 	}
 }
 
@@ -97,14 +97,17 @@ void CControl::OnSelchangeSubstyle()
 	switch( style )
 	{
 		case 0:
+			m_Limit.SetCheck(false);
 			m_Limit.EnableWindow(false);
 			view->GetDocument()->SetAverage( new AvgNOOP() );
 			break;
 		case 1:
+			m_Limit.SetCheck(false);
 			m_Limit.EnableWindow(false);
 			view->GetDocument()->SetAverage( new AvgAdHoc( false ) );
 			break;
 		case 2:
+			m_Limit.SetCheck(false);
 			m_Limit.EnableWindow(false);
 			view->GetDocument()->SetAverage( new AvgAdHoc( true ) );
 			break;
@@ -115,6 +118,7 @@ void CControl::OnSelchangeSubstyle()
 			break;
 		case 4:
 			OutputDebugString("Butterfly\n");
+			m_Limit.SetCheck(false);
 			m_Limit.EnableWindow(false);
 			view->GetDocument()->SetAverage( new AvgEval( true ) );
 			break;
@@ -127,7 +131,5 @@ void CControl::OnOK()
 
 void CControl::OnBnClickedLimit()
 {
-	if (m_Limit.GetCheck()) {
-		view->GetDocument()->PushToLimit();
-	}
+	view->GetDocument()->PushToLimit(m_Limit.GetCheck());
 }
