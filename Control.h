@@ -25,6 +25,7 @@ public:
 	CComboBox	m_Substyle;
 	CSliderCtrl	m_LevelSlider;
 	CButton m_Limit;
+	BOOL	m_Plane;
 	BOOL	m_EditLoRes;
 	BOOL	m_MoveLoRes;
 	BOOL	m_Wireframe;

@@ -279,13 +279,13 @@ View::glPushWorldSpace()
 }
 
 void
-View::glRender()
+View::glRender(int floor_tag)
 {
-   static GLuint floor_tag = 0;
+   //static GLuint floor_tag = 0;
    static GLuint crosshairs_tag = 0;
 
    // draw the floor
-   if (!floor_tag) {
+   if (floor_tag) {
       floor_tag = glGenLists(1);
       glNewList(floor_tag, GL_COMPILE_AND_EXECUTE);
       glDisable (GL_LIGHTING);

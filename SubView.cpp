@@ -124,7 +124,7 @@ CSubView::Render()
 	glEnable(GL_COLOR_MATERIAL);
 	view->glSetup();		// sets light position & other stuff
 	pole->glRender(NULL);
-	view->glRender();
+	view->glRender(m_Control->m_Plane);
 
 	CellVertexIterator vertices( doc->saveCell );
 	Vertex *v;
