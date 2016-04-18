@@ -258,15 +258,21 @@ void AvgEval::butterfly(Vertex *v)
 	v->nor = Vec3(0, 0, 0);
 	int n = 0;
 	Bool flag = true;
+	int count = 0;
 
-	do { // Check for extraordinary neighbors
+	do { // Check for the extraordinary neighbors
 		n = valence(e->Dest());
 		if (!(n == 6))
+		{
 			flag = false;
+			count++;
+		}
 		e = e->Onext();
 	} while (e != start);
 	
-	if (flag) // For Regular Interior Point
+	e = start;
+
+	if (flag) // For a Regular Interior Point
 	{
 		// ITERATION LEVEL: 1
 		do {
@@ -300,7 +306,7 @@ void AvgEval::butterfly(Vertex *v)
 
 				do {
 					e3 = e3->Onext();
-				} while (e3->Dest() == v);
+				} while (e3->Dest() != v);
 
 				e3 = e3->Onext();
 				e3 = e3->Onext();
@@ -335,17 +341,20 @@ void AvgEval::butterfly(Vertex *v)
 	}
 
 	else {
-		do { // Check for extraordinary neighbors
+		do { // For extraordinary neighbors
 			e = e->Onext();
 			n = valence(e->Dest());
 		} while (!(n == 6));
 
 		Vertex *v1 = e->Dest();
 		Edge *Temp = e->Dest()->getEdge();
+
+		v->nor += 0.75*v1->pos;
+
 		do
 		{
 			Temp = Temp->Onext();
-		} while (Temp->Dest() == v);
+		} while (!(Temp->Dest() == v));
 
 		Edge *start1 = Temp;
 		Edge *e1 = start1;
@@ -364,6 +373,8 @@ void AvgEval::butterfly(Vertex *v)
 			} while (e2 != start2);
 
 			e1 = e1->Onext();
+			start2 = e1->Dest()->getEdge();
+			e2 = start2;
 
 			//For s1 and s2
 			do {
@@ -388,8 +399,12 @@ void AvgEval::butterfly(Vertex *v)
 				if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
 					v->nor += (3.0 / 8.0)*(e2->Dest()->pos);
 			} while (e2 != start2);
+
+
 			e1 = e1->Onext();
 			e1 = e1->Onext();
+			start2 = e1->Dest()->getEdge();
+			e2 = start2;
 
 			//For s2
 			do {
@@ -422,7 +437,6 @@ void AvgEval::butterfly(Vertex *v)
 	//	          |
 	//            |
 	//	          V
-
 	/*
 
 	// ITERATION LEVEL: 1
