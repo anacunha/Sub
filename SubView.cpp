@@ -127,12 +127,16 @@ CSubView::Render()
 	view->glRender(m_Control->m_Plane);
 
 	CellVertexIterator vertices( doc->saveCell );
-	Vertex *v;
-	while( (v = vertices.next()) != 0 )
-		if( v == pickVertex )
-			sphere( 0,1,1, v->pos, radius );
-		else
-			sphere( 1,1,1, v->pos, radius );
+
+	// If we are displaying the control vertices
+	if (m_Control->m_Vertices) {
+		Vertex *v;
+		while ((v = vertices.next()) != 0)
+			if (v == pickVertex)
+				sphere(0, 1, 1, v->pos, radius);
+			else
+				sphere(1, 1, 1, v->pos, radius);
+	}
 
 	int drawState = 0; // indicates whether we are drawing the lores or hires, wire or fill
 	Cell *drawCell;
