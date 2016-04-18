@@ -67,6 +67,7 @@ class Vertex
   const void *data;
 
   int tag;
+  bool selected = false;
 
   /* -- public instance methods -------------------------------------------- */
 

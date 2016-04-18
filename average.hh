@@ -8,6 +8,7 @@
 
 class Cell;
 class Vertex;
+class Edge;
 
 class Average
 {

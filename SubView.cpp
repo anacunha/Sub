@@ -130,12 +130,15 @@ CSubView::Render()
 
 	// If we are displaying the control vertices
 	if (m_Control->m_Vertices) {
+		glDisable(GL_LIGHTING);
 		Vertex *v;
 		while ((v = vertices.next()) != 0)
-			if (v == pickVertex)
-				sphere(0, 1, 1, v->pos, radius);
+			// Display selected ones as yellow
+			if (v->selected)
+				sphere(1, 1, 0, v->pos, radius);
 			else
 				sphere(1, 1, 1, v->pos, radius);
+		glEnable(GL_LIGHTING);
 	}
 
 	int drawState = 0; // indicates whether we are drawing the lores or hires, wire or fill
@@ -245,6 +248,21 @@ void CSubView::OnButtonDown( int button, UINT nFlags, CPoint point )
 		}
 		else
 		{
+			// If left click
+			if (button == 0) {
+				pickVertex = control_point_pick(GetDocument()->saveCell, view, point.x, point.y);
+
+				// Check if we are selecting a control point
+				if (pickVertex) {
+
+					pickVertex->selected = !(pickVertex->selected);
+					
+					if (pickVertex->selected)
+						OutputDebugString("Selected control vertex\n");
+					else
+						OutputDebugString("Unselected control vertex\n");
+				}
+			}
 			button_stack->push( button, 0 );
 			view->begin( point.x,point.y );
 			Invalidate( FALSE );
