@@ -29,6 +29,7 @@ public:
 	BOOL	m_Vertices;
 	BOOL	m_EditLoRes;
 	BOOL	m_MoveLoRes;
+	BOOL    m_SurfaceFilled;
 	BOOL	m_Wireframe;
 	//}}AFX_DATA
 

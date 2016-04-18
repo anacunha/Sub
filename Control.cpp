@@ -27,6 +27,7 @@ CControl::CControl( CSubView* pParent /*=NULL*/)
 	m_Vertices = TRUE;
 	m_EditLoRes = FALSE;
 	m_MoveLoRes = FALSE;
+	m_SurfaceFilled = TRUE;
 	m_Wireframe = FALSE;
 	//}}AFX_DATA_INIT
 }
@@ -34,6 +35,7 @@ CControl::CControl( CSubView* pParent /*=NULL*/)
 
 void CControl::DoDataExchange(CDataExchange* pDX)
 {
+	BOOL old_SurfaceFilled = m_SurfaceFilled;
 	BOOL old_Wireframe = m_Wireframe;
 	BOOL old_Plane = m_Plane;
 	BOOL old_Vertices = m_Vertices;
@@ -46,9 +48,10 @@ void CControl::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_VERTICES, m_Vertices);
 	DDX_Check(pDX, IDC_EDITLORES, m_EditLoRes);
 	DDX_Check(pDX, IDC_MOVELORES, m_MoveLoRes);
+	DDX_Check(pDX, IDC_SURFACE_FILLED, m_SurfaceFilled);
 	DDX_Check(pDX, IDC_WIREFRAME, m_Wireframe);
 	//}}AFX_DATA_MAP
-	if( m_Wireframe != old_Wireframe || m_Plane != old_Plane || m_Vertices != old_Vertices )
+	if(m_Wireframe != old_Wireframe || m_Plane != old_Plane || m_Vertices != old_Vertices || old_SurfaceFilled != m_SurfaceFilled)
 		view->Invalidate(FALSE);
 }
 
