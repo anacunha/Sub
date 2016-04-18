@@ -340,149 +340,128 @@ void AvgEval::butterfly(Vertex *v)
 		} while (e2 != start2);
 	}
 
-	else {
+	else if (count == 1 ){
 		do { // For extraordinary neighbors
 			e = e->Onext();
 			n = valence(e->Dest());
-		} while (!(n == 6));
-
+		} while (n == 6);
 		Vertex *v1 = e->Dest();
-		Edge *Temp = e->Dest()->getEdge();
-
 		v->nor += 0.75*v1->pos;
-
-		do
-		{
-			Temp = Temp->Onext();
-		} while (!(Temp->Dest() == v));
-
-		Edge *start1 = Temp;
-		Edge *e1 = start1;
-
-		if (n == 3)
-		{
-
-			Edge *start2 = e1->Dest()->getEdge();
-			Edge *e2 = start2;
-
-			// For s0
-			do
-			{
-				if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
-					v->nor += (5.0 / 12.0)*(e2->Dest()->pos);
-			} while (e2 != start2);
-
-			e1 = e1->Onext();
-			start2 = e1->Dest()->getEdge();
-			e2 = start2;
-
-			//For s1 and s2
-			do {
-
-				do {
-					if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
-						v->nor += (-1.0 / 12.0)*(e2->Dest()->pos);
-				} while (e2 != start2);
-
-				e1 = e1->Onext();
-
-			} while (e1 != start1);
-		}
-
-		else if (n == 4)
-		{
-			Edge *start2 = e1->Dest()->getEdge();
-			Edge *e2 = start2;
-
-			// For s0			
-			do{
-				if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
-					v->nor += (3.0 / 8.0)*(e2->Dest()->pos);
-			} while (e2 != start2);
-
-
-			e1 = e1->Onext();
-			e1 = e1->Onext();
-			start2 = e1->Dest()->getEdge();
-			e2 = start2;
-
-			//For s2
-			do {
-				if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
-					v->nor += (-1.0 / 8.0)*(e2->Dest()->pos);
-			} while (e2 != start2);
-			
-		}
-		else {
-			double j = 0.0;
-			do {
-				Edge *start2 = e1->Dest()->getEdge();
-				Edge *e2 = start2;
-
-				double Sj;
-				Sj = 0.25 + cos(2.0*3.1415*j / (double)n) + cos(4.0*j / double(n)) / 2.0;
-				Sj /= n;
-				do
-				{
-					if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
-						v->nor += Sj*(e2->Dest()->pos);
-				} while (e2 != start2);
-				j++;
-				e1 = e1->Onext();
-			} while (e1 != start1);
-		}
+		extraordinary(v, v1, start, e, n);
+		v->nor += v->tmp;
 	}
-		
-	//SIR's Method 
-	//	          |
-	//            |
-	//	          V
-	/*
 
-	// ITERATION LEVEL: 1
-	Edge *start = v->getEdge();
-	Edge *e = start;
-	v->nor = Vec3(0, 0, 0);
-	int n = 0;
-	double t = 0.100;
-	v->nor += v->pos;
+	else {		
+		do { // For extraordinary neighbors
+			e = e->Onext();
+			n = valence(e->Dest());
+			if (!(n==6))
+			{
+				Vertex *v1 = e->Dest();
+				v->nor += (0.375)*v1->pos;
+				extraordinary(v, v1, start, e, n);
+				v->nor += (0.5)*(v->tmp);
+			}
+		} while (e != start);	
+	}
+}
 
-	// Iterating through all the vertices
-	do {
-		++n; // number of neighbors
-			 // v->nor += e->Dest()->pos;
-		if (e->Dest()->tag == VODD)
-			v->nor += t*(e->Dest()->pos);
-		e = e->Onext();
-	} while (e != start);
+void AvgEval::extraordinary(Vertex *v, Vertex *v1, Edge *start, Edge *e, int n)
+{
+	v->tmp = Vec3(0, 0, 0);
 
-	// ITERATION LEVEL: 2
-	Edge *start1 = v->getEdge();
+	Edge *Temp = e->Dest()->getEdge();
+	do
+	{
+		Temp = Temp->Onext();
+	} while (!(Temp->Dest() == v));
+
+	Edge *start1 = Temp;
 	Edge *e1 = start1;
 
-	do {
+	if (n == 3)
+	{
 
-		if (e1->Dest()->tag == VEVEN)
+		Edge *start2 = e1->Dest()->getEdge();
+		Edge *e2 = start2;
+
+		// For s0
+		do
 		{
-			Edge *start2 = (e1->Dest())->getEdge();
-			Edge *e2 = start2;
-
-			do {
-				e2 = e2->Onext();
-			} while (e2->Dest() == v);
-
+			if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
+				v->tmp += (5.0 / 12.0)*(e2->Dest()->pos);
 			e2 = e2->Onext();
-			e2 = e2->Onext();
-			v->nor += -t*(e2->Dest()->pos);
-
-			e2 = e2->Onext();
-			e2 = e2->Onext();
-			v->nor += -t*(e2->Dest()->pos);
-
-		}
+		} while (e2 != start2);
 
 		e1 = e1->Onext();
 
-	} while (e1 != start1);
-	*/
+		start2 = e1->Dest()->getEdge();
+		e2 = start2;
+
+		//For s1
+		do {
+			if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
+				v->tmp += (-1.0 / 12.0)*(e2->Dest()->pos);
+			e2 = e2->Onext();
+			} while (e2 != start2);
+		e1 = e1->Onext();
+
+		start2 = e1->Dest()->getEdge();
+		e2 = start2;
+
+		//For s2
+		do {
+			if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
+				v->tmp += (-1.0 / 12.0)*(e2->Dest()->pos);
+			e2 = e2->Onext();
+		} while (e2 != start2);
+		e1 = e1->Onext();
+		
+	}
+
+	else if (n == 4)
+	{
+		Edge *start2 = e1->Dest()->getEdge();
+		Edge *e2 = start2;
+
+		// For s0			
+		do {
+			if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
+				v->tmp += (3.0 / 8.0)*(e2->Dest()->pos);
+			e2 = e2->Onext();
+		} while (e2 != start2);
+
+
+		e1 = e1->Onext();
+		e1 = e1->Onext();
+		start2 = e1->Dest()->getEdge();
+		e2 = start2;
+
+		//For s2
+		do {
+			if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
+				v->tmp += (-1.0 / 8.0)*(e2->Dest()->pos);
+			e2 = e2->Onext();
+		} while (e2 != start2);
+
+	}
+	else {
+		double j = 0.0;
+		do {
+			Edge *start2 = e1->Dest()->getEdge();
+			Edge *e2 = start2;
+
+			double Sj;
+			Sj = 0.25 + cos(2.0*3.1415*j / (double)n) + 0.5*cos(4.0*3.1415*j / double(n));
+			Sj /= (double)n;
+			do
+			{
+				if ((e2->Dest()->tag == VEVEN) && (e2->Dest() != v1))
+					v->tmp += Sj*(e2->Dest()->pos);
+				e2 = e2->Onext();
+			} while (e2 != start2);
+			j++;
+			e1 = e1->Onext();
+		} while (e1 != start1);
+	}
 }

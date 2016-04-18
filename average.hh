@@ -54,6 +54,7 @@ public:
 	static void genNormals(Cell *cell);
 	static void average(Vertex *v);
 	static void butterfly(Vertex *v);
+	static void extraordinary(Vertex *v, Vertex *v1, Edge *start, Edge *e, int n);
 	static void evaluate(Vertex *v);
 	static double tau(double i, double n);
 };
