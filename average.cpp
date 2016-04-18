@@ -151,7 +151,10 @@ void AvgEval::average(Vertex *v)
 
 void AvgEval::applyEvaluation(Cell *cell)
 {
-	// 1. Generate new positions.  (Put new pos into tmp for the time being.)
+	// 1. Generate normals from tangent masks
+	genNormals(cell);
+
+	// 2. Generate new positions.  (Put new pos into tmp for the time being.)
 	{
 		CellVertexIterator verts(cell);
 		Vertex *v;
@@ -159,7 +162,7 @@ void AvgEval::applyEvaluation(Cell *cell)
 			if (!interpolating)
 				evaluate(v);
 	}
-	// 2. Copy positions out of tmp into pos.
+	// 3. Copy positions out of tmp into pos.
 	{
 		CellVertexIterator verts(cell);
 		Vertex *v;
@@ -189,7 +192,7 @@ void AvgEval::evaluate(Vertex *v)
 	// Apply Loop Evaluation Mask
 
 	// Calculate beta
-	double beta = (5.0 / 4.0) - (sqr(3 + 2 * cos((2 * 3.1415) / n)) / 32);
+	double beta = (5.0 / 4.0) - (sqr(3 + 2 * cos((2 * M_PI) / n)) / 32);
 
 	// Calculate epsilon
 	double epsilon = (3 * n) / beta;
@@ -197,6 +200,51 @@ void AvgEval::evaluate(Vertex *v)
 	v->tmp += v->pos * epsilon;
 	// Update Vertex based on evaluation mask formula
 	v->tmp /= double(n + epsilon);
+}
+
+void AvgEval::genNormals(Cell *cell)
+// Generate normals for all of the vertices in the cell.
+{
+	CellVertexIterator verts(cell);
+	Vertex *v;
+	while ((v = verts.next()) != 0)
+		genNormal(v);
+}
+
+void AvgEval::genNormal(Vertex *v)
+// Generate a normal for Vertex v by applying the loop tangent masks.
+{
+	Edge *start = v->getEdge();
+	Edge *e = start;
+	Vec3 tan1(0, 0, 0);
+	Vec3 tan2(0, 0, 0);
+	double n = valence(v);
+	double cnt = 0.0;
+
+	// Iterating through all the neighbor vertices
+	do
+	{
+		++cnt; // count of neighbors
+		tan1 += tau(cnt, n) * e->Dest()->pos;
+
+		if (cnt == 1)
+			tan2 += tau(n, n) * e->Dest()->pos;
+		else
+			tan2 += tau(cnt - 1, n) * e->Dest()->pos;
+
+		e = e->Onext();
+	} while (e != start);
+
+	normalise(tan1);
+	normalise(tan2);
+
+	v->nor = cross(tan1, tan2);
+	normalise(v->nor);
+}
+
+double AvgEval::tau(double i, double n)
+{
+	return cos((2 * M_PI * i) / n);
 }
 
 void AvgEval::butterfly(Vertex *v)

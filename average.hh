@@ -50,9 +50,12 @@ public:
 
 	void operator()(Cell *cell);
 	void applyEvaluation(Cell *cell);
+	static void genNormal(Vertex *v);
+	static void genNormals(Cell *cell);
 	static void average(Vertex *v);
 	static void butterfly(Vertex *v);
 	static void evaluate(Vertex *v);
+	static double tau(double i, double n);
 };
 
 #endif
