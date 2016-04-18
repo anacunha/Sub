@@ -108,7 +108,7 @@ CSubView::Render()
 	glEnable(GL_DEPTH_TEST);
 	glClearDepth(1.0);
    
-	if( m_Control->m_Wireframe )
+	if( m_Control->m_Wireframe && !m_Control->m_SurfaceFilled )
 	{
 		glDisable( GL_LIGHTING );
 		glShadeModel( GL_FLAT );
@@ -153,8 +153,14 @@ CSubView::Render()
 		drawCell = doc->editCell;
 	}
 
-    if( m_Control->m_Wireframe )
+    if( m_Control->m_Wireframe && !m_Control->m_SurfaceFilled)
 		drawState |= 2;
+
+	if (!m_Control->m_Wireframe && m_Control->m_SurfaceFilled)
+		drawState |= 3;
+
+	if (!m_Control->m_Wireframe && !m_Control->m_SurfaceFilled)
+		drawState |= 1;
 	
 	if( !modelDisplayList )
 		modelDisplayList = glGenLists(1);
@@ -168,10 +174,12 @@ CSubView::Render()
 	{
 		// miss
 		glNewList( modelDisplayList, GL_COMPILE_AND_EXECUTE );
-		if( m_Control->m_Wireframe )
-			drawWireframe( drawCell );
-		else
-			drawFilled( drawCell );
+		if (m_Control->m_Wireframe && !(m_Control->m_SurfaceFilled))
+			drawWireframe(drawCell);
+		else if (m_Control->m_Wireframe && m_Control->m_SurfaceFilled)
+			drawEverything(drawCell);
+		else if (!(m_Control->m_Wireframe) && m_Control->m_SurfaceFilled)
+			drawFilled(drawCell);
 		glEndList();
 		modelCached = true;
 		lastDrawState = drawState;
