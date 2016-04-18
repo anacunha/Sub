@@ -16,6 +16,7 @@ class Cell;
 
 Vertex *control_point_pick( Cell *, View *, int mx, int my);
 void sphere(double r, double g, double b, Vec3& cen, double radius);
+void drawEverything(Cell *cell);
 void drawFaceFilled(Face *face);
 void drawFilled(Cell *cell);
 void drawFaceWireframe(Face *face);

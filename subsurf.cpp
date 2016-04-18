@@ -64,6 +64,8 @@ sphere(double r, double g, double b, Vec3& cen, double radius)
     glPopMatrix();
 }
 
+
+
 void drawFaceFilled(Face *face)
 {
     FaceEdgeIterator edges(face);
@@ -110,4 +112,21 @@ void drawWireframe(Cell *cell) {
     while ((face = faces.next())!=0)
 	drawFaceWireframe(face);
     glEnd();
+}
+
+void drawEverything(Cell * cell) {
+	CellFaceIterator faces(cell);
+	Face *face;
+	glColor3f(.8f, .6f, .3f);		// make surface orange
+	while ((face = faces.next()) != 0)
+		drawFaceFilled(face);
+
+	CellFaceIterator faces2(cell);
+	Face *face2;
+	glColor3f(.0f, .0f, .0f);		// make surface white, for now
+	glLineWidth(2);
+	glBegin(GL_LINES);			// we'll draw line segments
+	while ((face2 = faces2.next()) != 0)
+		drawFaceWireframe(face2);
+	glEnd();
 }
