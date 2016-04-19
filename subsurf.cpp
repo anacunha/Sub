@@ -103,15 +103,34 @@ void drawFaceWireframe(Face *face)
 	}
 }
 
+void drawControlFaceWireframe(Face *face)
+{
+	FaceEdgeIterator edges(face);
+	Edge *edge;
+
+	// glBegin was done earlier
+	while ((edge = edges.next()) != 0)
+		if (edge->Org() < edge->Dest()) {	// so we don't draw edge twice
+											// we send normals, and leave lighting on, so edges will be shaded
+			if(edge->Org()->selected && edge->Dest()->selected)
+				glColor3f(1.0f, 1.0f, 0.0f);
+			else 
+				glColor3f(1.0f, 1.0f, 1.0f);
+			glNormal3dv(&edge->Org()->nor[0]);
+			glVertex3dv(&edge->Org()->pos[0]);	// one endpoint
+			glNormal3dv(&edge->Dest()->nor[0]);
+			glVertex3dv(&edge->Dest()->pos[0]);	// other endpoint
+		}
+}
+
 void drawControlEdges(Cell *cell) {
 	glDisable(GL_LIGHTING);
 	CellFaceIterator faces(cell);
 	Face *face;
-	glColor3f(1.0f, 1.0f, 1.0f);		// make surface white, for now
 	glLineWidth(2);
 	glBegin(GL_LINES);			// we'll draw line segments
 	while ((face = faces.next()) != 0)
-		drawFaceWireframe(face);
+		drawControlFaceWireframe(face);
 	glEnd();
 	glEnable(GL_LIGHTING);
 }
