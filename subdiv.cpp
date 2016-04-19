@@ -118,6 +118,25 @@ void splitAllEdges(Cell *c) {
 
 		    // mark new vertex as odd
 		    enew->Dest()->tag = VODD;
+			
+			//if (enew->Org()->selected && edge->Dest()->selected)
+				//enew->Dest()->selected = true;
+
+			Vertex *v1 = enew->Dest();
+			Edge *start1 = v1->getEdge();
+			Edge *e1 = start1;
+
+			int counter = 0;
+			do
+			{
+				if (e1->Dest()->selected && e1->Dest()->tag == VEVEN)
+					counter++;
+				e1 = e1->Onext();
+			} while (e1 != start1);
+
+			if (counter ==2)
+				enew->Dest()->selected = true;
+			
 		}
 	    }
 	}
