@@ -140,6 +140,10 @@ CSubView::Render()
 				sphere(1, 1, 1, v->pos, radius);
 		glEnable(GL_LIGHTING);
 	}
+	
+	// If we displaying the control edges
+	if (m_Control->m_Edges && !m_Control->m_Wireframe)
+		drawControlEdges(GetDocument()->saveCell);
 
 	int drawState = 0; // indicates whether we are drawing the lores or hires, wire or fill
 	Cell *drawCell;
@@ -153,7 +157,7 @@ CSubView::Render()
 		drawCell = doc->editCell;
 	}
 
-    if( m_Control->m_Wireframe && !m_Control->m_SurfaceFilled)
+    if (m_Control->m_Wireframe && !m_Control->m_SurfaceFilled)
 		drawState |= 2;
 
 	if (!m_Control->m_Wireframe && m_Control->m_SurfaceFilled)

@@ -26,6 +26,7 @@ public:
 	CSliderCtrl	m_LevelSlider;
 	CButton m_Limit;
 	BOOL	m_Plane;
+	BOOL	m_Edges;
 	BOOL	m_Vertices;
 	BOOL	m_EditLoRes;
 	BOOL	m_MoveLoRes;

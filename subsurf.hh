@@ -21,5 +21,6 @@ void drawFaceFilled(Face *face);
 void drawFilled(Cell *cell);
 void drawFaceWireframe(Face *face);
 void drawWireframe(Cell *cell);
+void drawControlEdges(Cell *cell);
 
 #endif

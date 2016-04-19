@@ -103,6 +103,19 @@ void drawFaceWireframe(Face *face)
 	}
 }
 
+void drawControlEdges(Cell *cell) {
+	glDisable(GL_LIGHTING);
+	CellFaceIterator faces(cell);
+	Face *face;
+	glColor3f(1.0f, 1.0f, 1.0f);		// make surface white, for now
+	glLineWidth(2);
+	glBegin(GL_LINES);			// we'll draw line segments
+	while ((face = faces.next()) != 0)
+		drawFaceWireframe(face);
+	glEnd();
+	glEnable(GL_LIGHTING);
+}
+
 void drawWireframe(Cell *cell) {
     CellFaceIterator faces( cell );
     Face *face;
