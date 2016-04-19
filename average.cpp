@@ -129,9 +129,14 @@ void AvgEval::average(Vertex *v)
 	int n = 0;
 	
 	// Iterating through all the vertices
-	//if odd selected?
+	// if odd selected?
 	
-	if (v->selected && (v->tag == VODD))
+	if (v->selected && (evenBetween(v) >= 3))
+	{
+		v->nor += v->pos;
+	}
+	
+	else if (v->selected && (v->tag == VODD))
 	{
 		//v->nor += 0.5*v->pos;
 		Edge *start1 = v->getEdge();
@@ -145,7 +150,7 @@ void AvgEval::average(Vertex *v)
 		} while (e1 != start1);
 	}
 
-	else if(v->selected && (evenBetween(v)>1))
+	else if(v->selected && (evenBetween(v)==2))
 	{
 		v->nor += 0.75*v->pos;
 		Edge *start1 = v->getEdge();
@@ -156,6 +161,8 @@ void AvgEval::average(Vertex *v)
 			e1 = e1->Onext();
 		} while (e1 != start1);
 	}
+
+	
 
 	else {
 		do
